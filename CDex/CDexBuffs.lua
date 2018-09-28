@@ -1,5 +1,5 @@
-IcicleBuffs = {
---[[This is the Buff module of Icicle. To add a buff, refer to the IcicleCds for spellIDs]]
+CDexBuffs = {
+--[[This is the Buff module of CDex. To add a buff, refer to the CDexCds for spellIDs]]
 	--Misc
 	[49281] = 20,
 	[57960] = 20,

@@ -1,4 +1,4 @@
-IcicleCds = {
+CDexCds = {
 	--Misc
 		[49281] = 120,
 	[57960] = 120,

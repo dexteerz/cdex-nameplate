@@ -1,7 +1,7 @@
-Icicle_sponsors = {
-	["A"] = "Official Developer of Icicle 3.3.5a",
-	["B"] = "Official Sponsor of Icicle 3.3.5a",
-	["C"] = "Official Contributer of Icicle 3.3.5a",
+CDex_sponsors = {
+	["A"] = "Official Developer of CDex 3.3.5a",
+	["B"] = "Official Sponsor of CDex 3.3.5a",
+	["C"] = "Official Contributer of CDex 3.3.5a",
 --devs
 	--Warsong
 	["Trollolloll"] = { ["Realm"] = "Warsong (Pure PvP)", ["Type"] = "A" },

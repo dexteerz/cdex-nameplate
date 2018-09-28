@@ -1,0 +1,12 @@
+## Interface: 30300
+## Title: CDex-Nameplate
+## Notes: Adds enemy cooldowns to their nameplate
+## SavedVariables: CDexdb
+## Author: Dexteerz, Linebr - WoW 3.3.5a
+
+CDex.xml
+settings.lua
+CDex.lua
+CDexCds.lua
+CDexBuffs.lua
+sponsors.lua

@@ -1,7 +1,7 @@
 
 dbDefaults = {
 	profile = {
-textfont = "Interface\\AddOns\\Icicle\\Hooge0655.ttf",
+textfont = "Interface\\AddOns\\CDex\\Hooge0655.ttf",
 fontSize = ceil(22 - 22  / 2),
 TextColor = "Green",
 all = false,

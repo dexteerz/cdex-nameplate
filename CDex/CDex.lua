@@ -1,97 +1,97 @@
-Icicle = LibStub("AceAddon-3.0"):NewAddon("Icicle", "AceConsole-3.0")
+CDex = LibStub("AceAddon-3.0"):NewAddon("CDex", "AceConsole-3.0")
 local AceConfigDialog = LibStub("AceConfigDialog-3.0")
 local AceConfig = LibStub("AceConfig-3.0")
-local self , Icicle = Icicle , Icicle
-local Icicle_TEXT="|cffFF7D0AIcicle|r"
-local Icicle_VERSION= " r335.01"
-local Icicle_AUTHOR=" updated by |cff0070DETrolollolol|r - Sargeras - Molten-WoW.com"
-local Icicledb
+local self , CDex = CDex , CDex
+local CDex_TEXT="|cffFF7D0ACDex|r"
+local CDex_VERSION= " r335.01"
+local CDex_AUTHOR=" updated by |cff0070DETrolollolol|r - Sargeras - Molten-WoW.com"
+local CDexdb
 
-Icicle_Font = {
-	["Interface\\AddOns\\Icicle\\Hooge0655.ttf"] = "Hooge0655",
-	["Interface\\AddOns\\Icicle\\FreeUniversal-Regular.ttf"] = "FreeUniversal-Regular",
+CDex_Font = {
+	["Interface\\AddOns\\CDex\\Hooge0655.ttf"] = "Hooge0655",
+	["Interface\\AddOns\\CDex\\FreeUniversal-Regular.ttf"] = "FreeUniversal-Regular",
 }
-Icicle_Color = {
+CDex_Color = {
 	["Green"] = "Green",
 	["Orange"] = "Orange",
 	["White"] = "White",
 	["Yellow"] = "Yellow",
 }
 
-function Icicle:OnInitialize()
-self.db2 = LibStub("AceDB-3.0"):New("Icicledb",dbDefaults, "Default");
-	DEFAULT_CHAT_FRAME:AddMessage(Icicle_TEXT .. Icicle_VERSION .. Icicle_AUTHOR .."  - /Icicle ");
-	--LibStub("AceConfig-3.0"):RegisterOptionsTable("Icicle", Icicle.Options, {"Icicle", "SS"})
-	self:RegisterChatCommand("Icicle", "ShowConfig")
+function CDex:OnInitialize()
+self.db2 = LibStub("AceDB-3.0"):New("CDexdb",dbDefaults, "Default");
+	DEFAULT_CHAT_FRAME:AddMessage(CDex_TEXT .. CDex_VERSION .. CDex_AUTHOR .."  - /CDex ");
+	--LibStub("AceConfig-3.0"):RegisterOptionsTable("CDex", CDex.Options, {"CDex", "SS"})
+	self:RegisterChatCommand("CDex", "ShowConfig")
 	self.db2.RegisterCallback(self, "OnProfileChanged", "ChangeProfile")
 	self.db2.RegisterCallback(self, "OnProfileCopied", "ChangeProfile")
 	self.db2.RegisterCallback(self, "OnProfileReset", "ChangeProfile")
-	Icicledb = self.db2.profile
-	Icicle.options = {
-		name = "Icicle",
+	CDexdb = self.db2.profile
+	CDex.options = {
+		name = "CDex",
 		desc = "Icons above enemy nameplates showing cooldowns",
 		type = 'group',
 		icon = [[Interface\Icons\Spell_Nature_ForceOfNature]],
 		args = {},
 	}
-	local bliz_options = CopyTable(Icicle.options)
+	local bliz_options = CopyTable(CDex.options)
 	bliz_options.args.load = {
 		name = "Load configuration",
 		desc = "Load configuration options",
 		type = 'execute',
 		func = "ShowConfig",
-		handler = Icicle,
+		handler = CDex,
 	}
 
-	LibStub("AceConfig-3.0"):RegisterOptionsTable("Icicle_bliz", bliz_options)
-	AceConfigDialog:AddToBlizOptions("Icicle_bliz", "Icicle")
+	LibStub("AceConfig-3.0"):RegisterOptionsTable("CDex_bliz", bliz_options)
+	AceConfigDialog:AddToBlizOptions("CDex_bliz", "CDex")
 end
-function Icicle:OnDisable()
+function CDex:OnDisable()
 end
 local function initOptions()
-	if Icicle.options.args.general then
+	if CDex.options.args.general then
 		return
 	end
 
-	Icicle:OnOptionsCreate()
+	CDex:OnOptionsCreate()
 
-	for k, v in Icicle:IterateModules() do
+	for k, v in CDex:IterateModules() do
 		if type(v.OnOptionsCreate) == "function" then
 			v:OnOptionsCreate()
 		end
 	end
-	AceConfig:RegisterOptionsTable("Icicle", Icicle.options)
+	AceConfig:RegisterOptionsTable("CDex", CDex.options)
 end
-function Icicle:ShowConfig()
+function CDex:ShowConfig()
 	initOptions()
-	AceConfigDialog:Open("Icicle")
+	AceConfigDialog:Open("CDex")
 end
-function Icicle:ChangeProfile()
-	Icicledb = self.db2.profile
-	for k,v in Icicle:IterateModules() do
+function CDex:ChangeProfile()
+	CDexdb = self.db2.profile
+	for k,v in CDex:IterateModules() do
 		if type(v.ChangeProfile) == 'function' then
 			v:ChangeProfile()
 		end
 	end
 end
-function Icicle:AddOption(key, table)
+function CDex:AddOption(key, table)
 	self.options.args[key] = table
 end
 local function setOption(info, value)
 	local name = info[#info]
-	Icicledb[name] = value
+	CDexdb[name] = value
 end
 local function getOption(info)
 	local name = info[#info]
-	return Icicledb[name]
+	return CDexdb[name]
 end
 GameTooltip:HookScript("OnTooltipSetUnit", function(tip)
         local name, server = tip:GetUnit()
 		local Realm = GetRealmName()
-        if (Icicle_sponsors[name] ) then if ( Icicle_sponsors[name]["Realm"] == Realm ) then
-		tip:AddLine(Icicle_sponsors[Icicle_sponsors[name].Type], 1, 0, 0 ) end; end
+        if (CDex_sponsors[name] ) then if ( CDex_sponsors[name]["Realm"] == Realm ) then
+		tip:AddLine(CDex_sponsors[CDex_sponsors[name].Type], 1, 0, 0 ) end; end
     end)
-function Icicle:OnOptionsCreate()
+function CDex:OnOptionsCreate()
 	self:AddOption("profiles", LibStub("AceDBOptions-3.0"):GetOptionsTable(self.db2))
 	self.options.args.profiles.order = -1
 	self:AddOption('General', {
@@ -110,28 +110,28 @@ function Icicle:OnOptionsCreate()
 					all = {
 						type = 'toggle',
 						name = "Enable Everything",
-						desc = "Enables Icicle for BGs, world and arena",
+						desc = "Enables CDex for BGs, world and arena",
 						order = 1,
 					},
 					arena = {
 						type = 'toggle',
 						name = "Arena",
 						desc = "Enabled in the arena",
-						disabled = function() return Icicledb.all end,
+						disabled = function() return CDexdb.all end,
 						order = 2,
 					},
 					battleground = {
 						type = 'toggle',
 						name = "Battleground",
 						desc = "Enable Battleground",
-						disabled = function() return Icicledb.all end,
+						disabled = function() return CDexdb.all end,
 						order = 3,
 					},
 					field = {
 						type = 'toggle',
 						name = "World",
 						desc = "Enabled outside Battlegrounds and arenas",
-						disabled = function() return Icicledb.all end,
+						disabled = function() return CDexdb.all end,
 						order = 4,
 					},
 					iconsizer = {
@@ -171,24 +171,24 @@ function Icicle:OnOptionsCreate()
 						max = 30,
 						step = 1,
 						get = function()
-							return Icicledb.fontSize
+							return CDexdb.fontSize
 						end,
 						set = function(info, value)
-							Icicledb.fontSize = value
+							CDexdb.fontSize = value
 						end
 					},
 					textfont = {
 						type = 'select',
 						name = "Cooldown number font",
 						desc = "Text font of cooldown number",
-						values = Icicle_Font,
+						values = CDex_Font,
 						order = 8,
 					},
 					TextColor = {
 						type = 'select',
 						name = "Cooldown number color",
 						desc = "Text color of cooldown number",
-						values = Icicle_Color,
+						values = CDex_Color,
 						order = 9,
 					},
 				},
@@ -196,7 +196,7 @@ function Icicle:OnOptionsCreate()
 		}
 	})
 	end
-local IcicleReset = {
+local CDexReset = {
 	[11958] = {"Deep Freeze", "Ice Block", "Icy Veins"},
 	[14185] = {"Sprint", "Vanish", "Shadowstep", "Evasion"},  --with prep glyph "Kick", "Dismantle", "Smoke Bomb"
 	[23989] = {"Deterrence", "Silencing Shot", "Scatter Shot", "Rapid Fire", "Kill Shot"},
@@ -209,24 +209,24 @@ local plateframe = CreateFrame("frame")
 local count = 0
 local width
 
-local IcicleInterrupts = {47528, 34490, 2139, 15487--[[Silence]], 1766, 5799--[[Wind Shear]], 72, 19647, 47476} --pummel
+local CDexInterrupts = {47528, 34490, 2139, 15487--[[Silence]], 1766, 5799--[[Wind Shear]], 72, 19647, 47476} --pummel
 
 local addicons = function(name, f)
 	local num = #db[name]
 	local size
 	if not width then width = f:GetWidth() end
-	if num * Icicledb.iconsizer + (num * 2 - 2) > width then
+	if num * CDexdb.iconsizer + (num * 2 - 2) > width then
 		size = (width - (num * 2 - 2)) / num
 	else 
-		size = Icicledb.iconsizer
+		size = CDexdb.iconsizer
 	end
 	for i = 1, #db[name] do
 		db[name][i]:ClearAllPoints()
 		db[name][i]:SetWidth(size)
 		db[name][i]:SetHeight(size)
-		db[name][i].cooldown:SetFont(Icicledb.textfont , Icicledb.fontSize, "THICKOUTLINE") --
+		db[name][i].cooldown:SetFont(CDexdb.textfont , CDexdb.fontSize, "THICKOUTLINE") --
 		if i == 1 then
-			db[name][i]:SetPoint("TOPLEFT", f, Icicledb.XOffsetter, size + Icicledb.YOffsetter)--10
+			db[name][i]:SetPoint("TOPLEFT", f, CDexdb.XOffsetter, size + CDexdb.YOffsetter)--10
 		else
 			db[name][i]:SetPoint("TOPLEFT", db[name][i-1], size + 2, 0)
 		end
@@ -234,7 +234,7 @@ local addicons = function(name, f)
 end
 
 local hideicons = function(name, f)
-	f.icicle = 0
+	f.CDex = 0
 	for i = 1, #db[name] do
 		db[name][i]:Hide()
 		db[name][i]:SetParent(nil)
@@ -246,32 +246,32 @@ end
 local sourcetable = function(Name, spellID, spellName, eventType)
 	if not db[Name] then db[Name] = {} end
 	local _, _, texture = GetSpellInfo(spellID)
-	local duration = IcicleCds[spellID]
-	local buffduration = IcicleBuffs[spellID]
+	local duration = CDexCds[spellID]
+	local buffduration = CDexBuffs[spellID]
 	local icon = CreateFrame("frame", nil, UIParent)
 	icon.texture = icon:CreateTexture(nil, "BORDER")
 	icon.texture:SetAllPoints(icon)
 	icon.texture:SetTexture(texture)
 	icon.cooldown = icon:CreateFontString(nil, "OVERLAY")--CreateFrame("Cooldown", nil, icon)
-	if Icicledb.TextColor == "Green" then
+	if CDexdb.TextColor == "Green" then
 	r = 0.7
 	g = 1
 	b = 0
 	icon.cooldown:SetTextColor(r, g, b)
 	end
-	if Icicledb.TextColor == "Orange" then
+	if CDexdb.TextColor == "Orange" then
 	r = 1
 	g = 0.5
 	b = 0
 	icon.cooldown:SetTextColor(r, g, b)
 	end
-	if Icicledb.TextColor == "White" then
+	if CDexdb.TextColor == "White" then
 	r = 0.8
 	g = 0.8
 	b = 0
 	icon.cooldown:SetTextColor(r, g, b)
 	end
-	if Icicledb.TextColor == "Yellow" then
+	if CDexdb.TextColor == "Yellow" then
 	r = 0.9
 	g = 0.8
 	b = 0
@@ -281,10 +281,10 @@ local sourcetable = function(Name, spellID, spellName, eventType)
 	icon.endtime = GetTime() + duration
 	icon.endtime2 = GetTime() + buffduration
 	icon.name = spellName
-	for k, v in ipairs(IcicleInterrupts) do
+	for k, v in ipairs(CDexInterrupts) do
 		if v == spellID then --spellName
 			local iconBorder = icon:CreateTexture(nil, "OVERLAY")
-			iconBorder:SetTexture("Interface\\AddOns\\Icicle\\Border.tga")
+			iconBorder:SetTexture("Interface\\AddOns\\CDex\\Border.tga")
 			iconBorder:SetVertexColor(1, 0.35, 0)--(1, 0.6, 0.1)
 			iconBorder:SetAllPoints(icon)
 		end
@@ -293,17 +293,17 @@ local sourcetable = function(Name, spellID, spellName, eventType)
 	local itimer = ceil(icon.endtime - GetTime()) -- cooldown duration
 	local itimer2 = ceil(icon.endtime2 - GetTime()) -- buff duration
 
-	--if not Icicledb.fontSize then Icicledb.fontSize = ceil(Icicledb.iconsizer - Icicledb.iconsizer  / 2) end
+	--if not CDexdb.fontSize then CDexdb.fontSize = ceil(CDexdb.iconsizer - CDexdb.iconsizer  / 2) end
 if eventType ~= "SPELL_AURA_REMOVED" then
 	if itimer >= 60 then 
 		icon.cooldown:SetTextColor(1, 0, 0)
-				icon.cooldown:SetFont(Icicledb.textfont ,Icicledb.fontSize, "OUTLINE")--
+				icon.cooldown:SetFont(CDexdb.textfont ,CDexdb.fontSize, "OUTLINE")--
 				icon.cooldown:SetText(itimer2)
 
 			if itimer2 <= 0 then 
 			icon.cooldown:SetTextColor(r, g, b)
 				if itimer < 90 then
-				icon.cooldown:SetFont(Icicledb.textfont ,Icicledb.fontSize, "OUTLINE")--
+				icon.cooldown:SetFont(CDexdb.textfont ,CDexdb.fontSize, "OUTLINE")--
 				icon.cooldown:SetText("1m")
 				elseif itimer < 150 then
 				icon.cooldown:SetText("2m") 
@@ -313,11 +313,11 @@ if eventType ~= "SPELL_AURA_REMOVED" then
 			end
 	elseif itimer < 60 and itimer >= 1 then --if it's less than 60s
 		icon.cooldown:SetTextColor(1, 0, 0)
-				icon.cooldown:SetFont(Icicledb.textfont ,Icicledb.fontSize, "OUTLINE")--
+				icon.cooldown:SetFont(CDexdb.textfont ,CDexdb.fontSize, "OUTLINE")--
 				icon.cooldown:SetText(itimer2)
 			if itimer2 <= 0 then
 				icon.cooldown:SetTextColor(r, g, b)
-				icon.cooldown:SetFont(Icicledb.textfont ,Icicledb.fontSize, "OUTLINE")--
+				icon.cooldown:SetFont(CDexdb.textfont ,CDexdb.fontSize, "OUTLINE")--
 				icon.cooldown:SetText(itimer)
 			end
 	else
@@ -327,7 +327,7 @@ if eventType ~= "SPELL_AURA_REMOVED" then
 end
 if eventType == "SPELL_AURA_REMOVED" then
 		if itimer >= 60 then 
-		icon.cooldown:SetFont(Icicledb.textfont ,Icicledb.fontSize, "OUTLINE")--
+		icon.cooldown:SetFont(CDexdb.textfont ,CDexdb.fontSize, "OUTLINE")--
 			icon.cooldown:SetTextColor(r, g, b)
 				if itimer < 90 then
 				icon.cooldown:SetText("1m")
@@ -338,21 +338,21 @@ if eventType == "SPELL_AURA_REMOVED" then
 				end
 		elseif itimer < 60 and itimer >= 1 then
 				icon.cooldown:SetTextColor(r, g, b)
-				icon.cooldown:SetFont(Icicledb.textfont ,Icicledb.fontSize, "OUTLINE")--
+				icon.cooldown:SetFont(CDexdb.textfont ,CDexdb.fontSize, "OUTLINE")--
 				icon.cooldown:SetText(itimer)
 		end
 	end
 end
 	--CooldownFrame_SetTimer(icon.cooldown, GetTime(), duration, 1) OmniCC
 	if spellID == 14185 or spellID == 23989 or spellID == 11958 then --Preperation, Cold Snap, Readiness
-		for k, v in ipairs(IcicleReset[spellID]) do			
+		for k, v in ipairs(CDexReset[spellID]) do			
 			for i = 1, #db[Name] do
 				if db[Name][i] then
 					if db[Name][i].name == v then
 						if db[Name][i]:IsVisible() then
 							local f = db[Name][i]:GetParent()
-							if f.icicle and f.icicle ~= 0 then
-								f.icicle = 0
+							if f.CDex and f.CDex ~= 0 then
+								f.CDex = 0
 							end
 						end
 						db[Name][i]:Hide()
@@ -369,8 +369,8 @@ end
 				if db[Name][i].name == spellName then
 					if db[Name][i]:IsVisible() then
 						local f = db[Name][i]:GetParent()
-						if f.icicle then
-							f.icicle = 0
+						if f.CDex then
+							f.CDex = 0
 						end
 					end
 					db[Name][i]:Hide()
@@ -428,8 +428,8 @@ local uppurge = function(self, elapsed)
 				if c.endtime < GetTime() then
 					if c:IsVisible() then
 						local f = c:GetParent()
-						if f.icicle then
-							f.icicle = 0
+						if f.CDex then
+							f.CDex = 0
 						end
 					end
 					c:Hide()
@@ -450,13 +450,13 @@ local getplate = function(frame, elapsed)
 		local num = WorldFrame:GetNumChildren()
 		for i = 1, num do
 			local f = select(i, WorldFrame:GetChildren())
-			if not f.icicle then f.icicle = 0 end
+			if not f.CDex then f.CDex = 0 end
 			if f:GetNumRegions() > 2 and f:GetNumChildren() >= 1 then
 				if f:IsVisible() then
 					local name = getname(f)
 					if db[name] ~= nil then
-						if f.icicle ~= db[name] then
-							f.icicle = #db[name]
+						if f.CDex ~= db[name] then
+							f.CDex = #db[name]
 							for i = 1, #db[name] do
 								db[name][i]:SetParent(f)
 								db[name][i]:Show()
@@ -473,16 +473,16 @@ local getplate = function(frame, elapsed)
 	end
 end
 
-local IcicleEvent = {}
-function IcicleEvent.COMBAT_LOG_EVENT_UNFILTERED(event, ...)
+local CDexEvent = {}
+function CDexEvent.COMBAT_LOG_EVENT_UNFILTERED(event, ...)
 	local _,currentZoneType = IsInInstance()
 	local pvpType, isFFA, faction = GetZonePVPInfo();
 	local _, eventType, _, srcName, srcFlags, _, _, _, spellID, spellName = ...
 
-	if (not ((pvpType == "contested" and Icicledb.field) or (pvpType == "hostile" and Icicledb.field) or (pvpType == "friendly" and Icicledb.field) or (currentZoneType == "pvp" and Icicledb.battleground) or (currentZoneType == "arena" and Icicledb.arena) or Icicledb.all)) then
+	if (not ((pvpType == "contested" and CDexdb.field) or (pvpType == "hostile" and CDexdb.field) or (pvpType == "friendly" and CDexdb.field) or (currentZoneType == "pvp" and CDexdb.battleground) or (currentZoneType == "arena" and CDexdb.arena) or CDexdb.all)) then
 	return
 	end
-	if IcicleCds[spellID] and bit.band(srcFlags, COMBATLOG_OBJECT_REACTION_HOSTILE) ~= 0 then
+	if CDexCds[spellID] and bit.band(srcFlags, COMBATLOG_OBJECT_REACTION_HOSTILE) ~= 0 then
 		local Name = strmatch(srcName, "[%P]+")
 		if eventType == "SPELL_CAST_SUCCESS" or eventType == "SPELL_AURA_APPLIED" or eventType == "SPELL_MISSED" or eventType == "SPELL_SUMMON" or eventType == "SPELL_AURA_REMOVED" then
 			if not eventcheck[Name] then eventcheck[Name] = {} end
@@ -504,16 +504,16 @@ function IcicleEvent.COMBAT_LOG_EVENT_UNFILTERED(event, ...)
 	end
 end
 
-function IcicleEvent.PLAYER_ENTERING_WORLD(event, ...)
+function CDexEvent.PLAYER_ENTERING_WORLD(event, ...)
 	wipe(db)
 	wipe(eventcheck)
 	count = 0
 end
 
-local Icicle = CreateFrame("frame")
-Icicle:RegisterEvent("COMBAT_LOG_EVENT_UNFILTERED")
-Icicle:RegisterEvent("PLAYER_ENTERING_WORLD")
-Icicle:SetScript("OnEvent", function(frame, event, ...)
-	IcicleEvent[event](IcicleEvent, ...)
+local CDex = CreateFrame("frame")
+CDex:RegisterEvent("COMBAT_LOG_EVENT_UNFILTERED")
+CDex:RegisterEvent("PLAYER_ENTERING_WORLD")
+CDex:SetScript("OnEvent", function(frame, event, ...)
+	CDexEvent[event](CDexEvent, ...)
 end)
 	

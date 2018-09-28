@@ -3,8 +3,8 @@ local AceConfigDialog = LibStub("AceConfigDialog-3.0")
 local AceConfig = LibStub("AceConfig-3.0")
 local self , CDex = CDex , CDex
 local CDex_TEXT="|cffFF7D0ACDex|r"
-local CDex_VERSION= " r335.01"
-local CDex_AUTHOR=" updated by |cff0070DETrolollolol|r - Sargeras - Molten-WoW.com"
+local CDex_VERSION= " r335.02"
+local CDex_AUTHOR=" updated by | Dexteerz"
 local CDexdb
 
 CDex_Font = {

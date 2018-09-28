@@ -2,7 +2,7 @@
 
 [![D|eux](https://raw.githubusercontent.com/dexteerz/cdex-nameplate/master/imgs/icon.png)](https://github.com/dexteerz/cdex-nameplate)
 
-This is the modified version of iCircle for World of Warcraft - Wrath of the Lich King (3.3.5a) 
+This is the modified version of iCircle for World of Warcraft - Wrath of the Lich King (3.3.5a).
 Cdex-NamePlate complements the badge of the cowndowns of the main defensive and offensive spells. Difference of iCircle, this project is totally oriented towards version 3.3.5 and with some spells added or removed to the taste of the project collaborators.
 
 
